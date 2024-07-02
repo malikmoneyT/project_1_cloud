@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis</title>
+<title>Sentiment Analysis</title>
+</head>
+<body>
+<h1>Sentiment Analysis</h1>
+<form id="sentiment-form">
+<textarea id="text" placeholder="Enter text here..." rows="10" cols="50"></textarea><br>
+<button type="button" onclick="analyzeSentiment()">Analyze</button>
+</form>
+<h2>Result:</h2>
+<p id="result"></p>
+ 
     <script>
         async function analyzeSentiment() {
             const text = document.getElementById('text').value;
-
-            const response = await fetch('/api/sentiment/', {
+            const response = await fetch('/analyze', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ text })
+                body: JSON.stringify({ text }),
             });
-
-            const data = await response.json();
-            document.getElementById('result').innerText = `Sentiment: ${data.sentiment}`;
+            const result = await response.json();
+            if (result.error) {
+                document.getElementById('result').innerText = result.error;
+            } else {
+                document.getElementById('result').innerText = Positive: ${result.Positive}, Negative: ${result.Negative}, Neutral: ${result.Neutral}, Mixed: ${result.Mixed};
+            }
         }
-    </script>
-</head>
-<body>
-    <h1>Sentiment Analysis</h1>
-    <form id="sentimentForm">
-        <textarea id="text" rows="4" cols="50" placeholder="Enter text here..."></textarea><br><br>
-        <button type="button" onclick="analyzeSentiment()">Analyze Sentiment</button>
-    </form>
-    <p id="result"></p>
+</script>
 </body>
 </html>
+
