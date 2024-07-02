@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <script>
+        async function analyzeSentiment() {
+            const text = document.getElementById('text').value;
+
+            const response = await fetch('/api/sentiment/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text })
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = `Sentiment: ${data.sentiment}`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form id="sentimentForm">
+        <textarea id="text" rows="4" cols="50" placeholder="Enter text here..."></textarea><br><br>
+        <button type="button" onclick="analyzeSentiment()">Analyze Sentiment</button>
+    </form>
+    <p id="result"></p>
+</body>
+</html>
